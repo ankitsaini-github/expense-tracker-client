@@ -1,11 +1,16 @@
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom';
 import React, { useRef, useState } from 'react';
 
 import Footer from '../Footer';
-import { Link } from 'react-router-dom/cjs/react-router-dom';
 import Navbar from '../Navbar';
+import { authActions } from "../../store/authReducer";
 import axios from 'axios';
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [error, seterror] = useState(null)
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -37,7 +42,12 @@ const Login = () => {
       }
 
       console.log('Server response:', res.data);
+      window.localStorage.setItem('token',res.data.token)
+      window.localStorage.setItem('useremail',res.data.useremail);
       window.alert(res.data.message);
+      dispatch(authActions.login())
+
+      history.push('/dashboard');
       
       userEmail.current.value = '';
       userPassword.current.value = '';

@@ -6,13 +6,15 @@ const ExpenseForm = ({ onAddExpense }) => {
   const [expenseAmount, setExpenseAmount] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
+  
+  const token=window.localStorage.getItem('token');
 
   const handleAddExpense = async (e) => {
     e.preventDefault();
     const newExpense = { amount: expenseAmount, description, category };
-
+    
     try {
-      const response = await axios.post('http://localhost:3000/expenses/add-expense', newExpense);
+    const response = await axios.post('http://localhost:3000/expenses/add-expense', newExpense, {headers:{'Authorization' : token}});
       onAddExpense(response.data);
       setExpenseAmount('');
       setDescription('');
@@ -23,9 +25,9 @@ const ExpenseForm = ({ onAddExpense }) => {
   };
 
   return (
-    <form onSubmit={handleAddExpense} className="mb-4">
-      <div className="mb-2">
-        <label className="block text-sm font-medium text-gray-300">Expense Amount:</label>
+    <form onSubmit={handleAddExpense} className="mb-4 p-3">
+      <div className="mb-3">
+        <label className="block text-md font-medium text-gray-300">Expense Amount:</label>
         <input
           type="number"
           value={expenseAmount}
@@ -34,8 +36,8 @@ const ExpenseForm = ({ onAddExpense }) => {
           required
         />
       </div>
-      <div className="mb-2">
-        <label className="block text-sm font-medium text-gray-300">Description:</label>
+      <div className="mb-3">
+        <label className="block text-md font-medium text-gray-300">Description:</label>
         <input
           type="text"
           value={description}
@@ -44,8 +46,8 @@ const ExpenseForm = ({ onAddExpense }) => {
           required
         />
       </div>
-      <div className="mb-2">
-        <label className="block text-sm font-medium text-gray-300">Category:</label>
+      <div className="mb-3">
+        <label className="block text-md font-medium text-gray-300">Category:</label>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}

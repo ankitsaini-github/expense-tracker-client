@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 
 import ExpenseForm from './ExpenseForm';
 import ExpenseTable from './ExpenseTable';
+import Navbar from '../Navbar';
 import axios from 'axios';
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState([]);
+  
+  const token=window.localStorage.getItem('token');
 
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/expenses/fetch-all');
+        const response = await axios.get(`http://localhost:3000/expenses/fetch-all`,{headers : {'Authorization' : token}});
         setExpenses(response.data);
       } catch (error) {
         console.error('Error fetching expenses:', error);
@@ -30,11 +33,13 @@ const Dashboard = () => {
   };
 
   return (
-      <div className="container mx-auto p-4 bg-gray-800 text-white min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">DhanDiary</h1>
+    <>
+      <Navbar />
+      <div className="container mx-auto mt-6 p-4 bg-zinc-800 text-white min-h-screen">
         <ExpenseForm onAddExpense={handleAddExpense} />
         <ExpenseTable expenses={expenses} onDeleteExpense={handleDeleteExpense} />
       </div>
+    </>
   );
 };
 
