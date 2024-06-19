@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react';
 
+import Footer from '../Footer';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import Navbar from '../Navbar';
 import axios from 'axios';
 
 const Login = () => {
   const [error, seterror] = useState(null)
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const userEmail = useRef(null);
   const userPassword = useRef(null);
@@ -27,14 +30,15 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:3000/user/login',loginPayload)
 
-      if (res.status !== 201) {
+      if (res.status !== 200) {
         console.log('Error============:', res);
         seterror('Failed to Log in. Please try again.');
         return;
       }
 
       console.log('Server response:', res.data);
-
+      window.alert(res.data.message);
+      
       userEmail.current.value = '';
       userPassword.current.value = '';
 
@@ -45,32 +49,58 @@ const Login = () => {
 
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible((prevState) => !prevState);
+  };
+  
   const clearError = () => {
     seterror(null);
   };
 
   return (
-    <div className='w-full h-screen bg-zinc-900 flex justify-center items-center p-4'>
-      <div className=' w-full max-w-md bg-zinc-800 h-auto shadow-2xl rounded-lg text-white flex flex-col justify-center px-5 py-10'>
-        <h1 className='text-2xl mb-5 font-bold'>Login</h1>
-        <form className='flex flex-col space-y-4' onSubmit={submitHandler}>
+    <div className="flex flex-col min-h-screen bg-zinc-900 text-white">
+      <Navbar />
+      <div className="flex-grow flex justify-center items-center p-4">
+        <div className=' w-full max-w-md bg-zinc-800 h-auto shadow-2xl rounded-lg text-white flex flex-col justify-center px-5 py-10'>
+          <h1 className='text-2xl mb-5 font-semibold'>Login</h1>
+          <form className='flex flex-col space-y-4' onSubmit={submitHandler}>
 
-          <div className='flex flex-col'>
-            <label htmlFor="useremail" className='mb-2'>Email</label>
-            <input type="email" name="useremail" id="useremail" ref={userEmail} className='p-2 rounded bg-zinc-700' autoComplete='off' onChange={clearError} required/>
-          </div>
-          
-          <div className='flex flex-col'>
-            <label htmlFor="userpassword" className='mb-2'>Password</label>
-            <input type="password" name="userpassword" id="userpassword" ref={userPassword} className='p-2 rounded bg-zinc-700' autoComplete='new-password' onChange={clearError} required/>
-          </div>
-          
-          <Link to='/signup' className="text-zinc-400 hover:text-zinc-100 text-md">Don't have an account? Signup now</Link>
-          
-          <button type='submit' className=' p-2 bg-lime-600 rounded hover:bg-lime-700'>Login</button>
-        </form>
-        {error && <p className='text-red-400 mt-4'>{error}</p>}
+            <div className='flex flex-col'>
+              <label htmlFor="useremail" className='mb-2'>Email</label>
+              <input type="email" name="useremail" id="useremail" ref={userEmail} className='p-2 rounded bg-zinc-700' autoComplete='off' onChange={clearError} required/>
+            </div>
+            
+            <div className='flex flex-col'>
+              <label htmlFor="userpassword" className='mb-2'>Password</label>
+              <div className="relative">
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  name="userpassword"
+                  id="userpassword"
+                  ref={userPassword}
+                  className="p-2 rounded bg-zinc-700 w-full"
+                  autoComplete="new-password"
+                  onChange={clearError}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-2 top-2 text-zinc-400"
+                >
+                  {passwordVisible ? "Hide" : "Show"}
+                </button>
+              </div>
+            </div>
+            
+            <Link to='/signup' className="text-zinc-400 hover:text-zinc-100 text-md">Don't have an account? Signup now</Link>
+            
+            <button type='submit' className=' p-2 rounded bg-gradient-to-b from-lime-500 to-lime-700 hover:from-lime-600 hover:to-lime-800'>Login</button>
+          </form>
+          {error && <p className='text-red-400 mt-4'>{error}</p>}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
