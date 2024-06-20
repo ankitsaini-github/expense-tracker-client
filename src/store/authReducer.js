@@ -13,6 +13,7 @@ const authSlice=createSlice({
         },
         logout(state){
             state.isloggedin=false
+            state.isPro=false
         },
         setIsPro(state,action){
             state.isPro=action.payload;

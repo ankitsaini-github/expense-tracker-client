@@ -40,7 +40,7 @@ const Leaderboard = () => {
                 <tr key={user.id} className='border-t-2 border-zinc-800 bg-zinc-700 hover:bg-slate-700'>
                   <td className="py-2 px-4 text-center">{i+1}</td>
                   <td className="py-2 px-4 text-center">{user.name}</td>
-                  <td className="py-2 px-4 text-center">{user.totalExpenses}</td>
+                  <td className="py-2 px-4 text-center">{user.totalExpense}</td>
                 </tr>
               ))
             ) : (
