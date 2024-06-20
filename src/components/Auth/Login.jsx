@@ -44,8 +44,10 @@ const Login = () => {
       console.log('Server response:', res.data);
       window.localStorage.setItem('token',res.data.token)
       window.localStorage.setItem('useremail',res.data.useremail);
+      window.localStorage.setItem('isPro',res.data.isPro)
+      
       window.alert(res.data.message);
-      dispatch(authActions.login())
+      dispatch(authActions.login(res.data.isPro))
 
       history.push('/dashboard');
       
@@ -77,7 +79,7 @@ const Login = () => {
 
             <div className='flex flex-col'>
               <label htmlFor="useremail" className='mb-2'>Email</label>
-              <input type="email" name="useremail" id="useremail" ref={userEmail} className='p-2 rounded bg-zinc-700' autoComplete='off' onChange={clearError} required/>
+              <input type="email" name="useremail" id="useremail" ref={userEmail} className='p-2 rounded bg-zinc-900 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500' autoComplete='off' onChange={clearError} required/>
             </div>
             
             <div className='flex flex-col'>
@@ -88,7 +90,7 @@ const Login = () => {
                   name="userpassword"
                   id="userpassword"
                   ref={userPassword}
-                  className="p-2 rounded bg-zinc-700 w-full"
+                  className="p-2 rounded bg-zinc-900 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500 w-full"
                   autoComplete="new-password"
                   onChange={clearError}
                   required
@@ -96,7 +98,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 top-2 text-zinc-400"
+                  className="absolute right-2 top-2 text-zinc-500"
                 >
                   {passwordVisible ? "Hide" : "Show"}
                 </button>

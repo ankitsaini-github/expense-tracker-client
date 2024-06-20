@@ -8,6 +8,7 @@ import axios from 'axios';
 const Navbar = () => {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.auth.isloggedin);
+  const isPro = useSelector((state) => state.auth.isPro);
   const history = useHistory();
 
   const loadRazorpayScript = () => {
@@ -30,37 +31,40 @@ const Navbar = () => {
 
     // Create order on the server
     const token = window.localStorage.getItem('token');
-    const response = await axios.get('http:localhost:3000/checkout/buy-pro',{headers:{'Authorization': token}});
-    const data = response.data;
 
+    console.log('sending req to buypro') // test
+    const response = await axios.get('http://localhost:3000/checkout/buy-pro',{headers:{'Authorization': token}});
+    console.log('buy pro res ====== ',response) // test
+    const data = response.data;
+    console.log('buy pro data === ',data) // test
+    
     const options = {
       key: data.key_id,
       // amount: data.amount.toString(),
       currency: data.currency,
-      name: 'DhanDiary Pro',
+      name: 'DhanDiary',
       description: 'Upgrade to Pro',
       order_id: data.order.id,
       handler: async function (response) {
-        // alert(response.razorpay_payment_id);
-        // alert(response.razorpay_order_id);
-        // alert(response.razorpay_signature);
+
         await axios.post('http://localhost:3000/checkout/update-status',{
           order_id: options.order_id,
           payment_id: response.razorpay_payment_id,
         },{headers:{'Authorization': token}})
 
+        dispatch(authActions.setIsPro(true));
         alert('Congrats! you are now a premium user.');
       },
-      prefill: {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        contact: '9999999999',
-      },
+      // prefill: {
+      //   name: 'John Doe',
+      //   email: 'john.doe@example.com',
+      //   contact: '9999999999',
+      // },
       notes: {
         address: 'Razorpay Corporate Office',
       },
       theme: {
-        color: '#3399cc',
+        color: '#65a30d',
       },
     };
 
@@ -76,14 +80,16 @@ const Navbar = () => {
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("useremail");
+    localStorage.removeItem('isPro')
     dispatch(authActions.logout());
     history.push("/login");
   };
 
   return (
     <nav className="w-full bg-zinc-800 py-4 px-6 flex justify-between items-center">
-      <h1 className="bg-gradient-to-r from-lime-400 to-lime-500 bg-clip-text text-transparent text-2xl font-extrabold">
-        DhanDiary
+      <h1 className="bg-gradient-to-r from-lime-400 to-lime-500 bg-clip-text text-transparent text-2xl font-extrabold flex">
+        <span>DhanDiary</span>
+        {isPro && <span className="ml-2 text-sm text-lime-400 font-bold">PRO</span>}
       </h1>
       <div className="space-x-4">
         {isLogin && (
@@ -92,7 +98,15 @@ const Navbar = () => {
               Dashboard
             </Link>
 
-            <button
+            {isPro && <span>
+
+              <Link to="/leaderboard" className="text-zinc-400 hover:text-lime-400">
+                Leaderboard
+              </Link>
+              
+              </span>}
+
+            {!isPro && <button
               className="relative inline-flex items-center justify-start px-3 py-1 overflow-hidden font-semibold rounded-full group"
               onClick={displayRazorpay}
             >
@@ -102,7 +116,7 @@ const Navbar = () => {
                 Buy Pro
               </span>
               <span className="absolute inset-0 border-2 border-lime-400 rounded-full"></span>
-            </button>
+            </button>}
 
             <button
               className="bg-zinc-400 hover:bg-lime-400 transition-all duration-300 ease-in-out text-zinc-900 font-semibold px-2 py-1 rounded "

@@ -36,7 +36,7 @@ const ExpenseForm = ({ onAddExpense }) => {
           type="number"
           value={expenseAmount}
           onChange={(e) => setExpenseAmount(e.target.value)}
-          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-600 rounded-md bg-zinc-900 text-white"
+          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500 rounded-md bg-zinc-900 text-white"
           required
         />
       </div>
@@ -46,7 +46,7 @@ const ExpenseForm = ({ onAddExpense }) => {
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-600 rounded-md bg-zinc-900 text-white"
+          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500 rounded-md bg-zinc-900 text-white"
           required
         />
       </div>
@@ -67,7 +67,7 @@ const ExpenseForm = ({ onAddExpense }) => {
           <option value="Other">Other</option>
         </select>
       </div>
-      <button type="submit" className="mt-2 px-4 py-2 bg-gradient-to-b from-lime-500 to-lime-700 hover:from-lime-600 hover:to-lime-800  text-white font-semibold rounded">
+      <button type="submit" className="mt-2 px-4 py-2 bg-gradient-to-b from-lime-500 to-lime-700 hover:from-lime-600 hover:to-lime-800  text-zinc-900 text-lg font-bold rounded">
         Add Expense
       </button>
     </form>

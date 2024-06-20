@@ -10,6 +10,7 @@ import {
 
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer";
+import Leaderboard from "./components/Leaderboard/Leaderboard";
 import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar";
 import PageNotFound from "./components/PageNotFound";
@@ -26,10 +27,14 @@ function App() {
         </Route>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        {isLogin && (
+        {isLogin && (<>
           <Route path="/dashboard">
             <Dashboard />
           </Route>
+          <Route path="/leaderboard">
+          <Leaderboard />
+        </Route>
+        </>
         )}
         <Route path="*">
           <PageNotFound />

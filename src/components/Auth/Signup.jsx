@@ -80,7 +80,7 @@ const Signup = () => {
                 name="username"
                 id="username"
                 ref={userName}
-                className="p-2 rounded bg-zinc-700"
+                className="p-2 rounded bg-zinc-900 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500"
                 autoComplete="off"
                 onChange={clearError}
                 required
@@ -96,7 +96,7 @@ const Signup = () => {
                 name="useremail"
                 id="useremail"
                 ref={userEmail}
-                className="p-2 rounded bg-zinc-700"
+                className="p-2 rounded bg-zinc-900 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500"
                 autoComplete="off"
                 onChange={clearError}
                 required
@@ -113,7 +113,7 @@ const Signup = () => {
                   name="userpassword"
                   id="userpassword"
                   ref={userPassword}
-                  className="p-2 rounded bg-zinc-700 w-full"
+                  className="p-2 rounded bg-zinc-900 w-full border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-500"
                   autoComplete="new-password"
                   onChange={clearError}
                   required
@@ -121,7 +121,7 @@ const Signup = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 top-2 text-zinc-400"
+                  className="absolute right-2 top-2 text-zinc-500"
                 >
                   {passwordVisible ? "Hide" : "Show"}
                 </button>
