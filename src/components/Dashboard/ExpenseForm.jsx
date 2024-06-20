@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 const ExpenseForm = ({ onAddExpense }) => {
   const [expenseAmount, setExpenseAmount] = useState('');
@@ -16,23 +17,26 @@ const ExpenseForm = ({ onAddExpense }) => {
     try {
     const response = await axios.post('http://localhost:3000/expenses/add-expense', newExpense, {headers:{'Authorization' : token}});
       onAddExpense(response.data);
+      toast.success('Expense Added.')
       setExpenseAmount('');
       setDescription('');
       setCategory('');
     } catch (error) {
       console.error('Error adding expense:', error);
+      toast.error(error.error)
     }
   };
 
   return (
     <form onSubmit={handleAddExpense} className="mb-4 p-3">
+      
       <div className="mb-3">
         <label className="block text-md font-medium text-gray-300">Expense Amount:</label>
         <input
           type="number"
           value={expenseAmount}
           onChange={(e) => setExpenseAmount(e.target.value)}
-          className="mt-1 block w-full p-2 border border-gray-600 rounded-md bg-gray-700 text-white"
+          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-600 rounded-md bg-zinc-900 text-white"
           required
         />
       </div>
@@ -42,7 +46,7 @@ const ExpenseForm = ({ onAddExpense }) => {
           type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-1 block w-full p-2 border border-gray-600 rounded-md bg-gray-700 text-white"
+          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-600 rounded-md bg-zinc-900 text-white"
           required
         />
       </div>
@@ -51,7 +55,7 @@ const ExpenseForm = ({ onAddExpense }) => {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="mt-1 block w-full p-2 border border-gray-600 rounded-md bg-gray-700 text-white"
+          className="mt-1 block w-full p-2 border-2 border-transparent focus:outline-none focus:ring-0 focus:border-lime-600 rounded-md bg-zinc-900 text-white"
           required
         >
           <option value="" disabled>Select category</option>
@@ -63,7 +67,7 @@ const ExpenseForm = ({ onAddExpense }) => {
           <option value="Other">Other</option>
         </select>
       </div>
-      <button type="submit" className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md">
+      <button type="submit" className="mt-2 px-4 py-2 bg-gradient-to-b from-lime-500 to-lime-700 hover:from-lime-600 hover:to-lime-800  text-white font-semibold rounded">
         Add Expense
       </button>
     </form>

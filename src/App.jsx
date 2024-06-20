@@ -14,10 +14,10 @@ import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar";
 import PageNotFound from "./components/PageNotFound";
 import Signup from "./components/Auth/Signup";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 function App() {
-  const isLogin=useSelector(state=>state.auth.isloggedin);
+  const isLogin = useSelector((state) => state.auth.isloggedin);
   return (
     <Router>
       <Switch>
@@ -26,9 +26,11 @@ function App() {
         </Route>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        {isLogin && <Route path = "/dashboard">
-          <Dashboard/>
-        </Route>}
+        {isLogin && (
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+        )}
         <Route path="*">
           <PageNotFound />
         </Route>

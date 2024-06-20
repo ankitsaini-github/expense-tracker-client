@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ExpenseTable = ({ expenses, onDeleteExpense }) => {
   const token=window.localStorage.getItem('token');
@@ -7,19 +8,21 @@ const ExpenseTable = ({ expenses, onDeleteExpense }) => {
   const handleDelete = async (id) => {
     if(confirm('Do you want to delete this expense ?')){
       try {
-        await axios.delete(`http://localhost:3000/expenses/delete-expense/${id}`,{headers : {'Authorization' : token}});
+        const res=await axios.delete(`http://localhost:3000/expenses/delete-expense/${id}`,{headers : {'Authorization' : token}});
         onDeleteExpense(id);
+        toast.success(res.data.message)
       } catch (error) {
         console.error("Error deleting expense:", error);
+        toast.error(error.error);
       }
     }
   };
 
   return (
     <div className="overflow-x-auto p-3">
-      <table className="min-w-full text-white rounded-xl shadow-lg ">
+      <table className="min-w-full text-white rounded-md overflow-hidden">
         <thead>
-          <tr className="bg-zinc-900 text-left">
+          <tr className="bg-black text-left">
             <th className="py-3 px-6 font-semibold tracking-wider uppercase">
               Amount
             </th>
@@ -38,7 +41,7 @@ const ExpenseTable = ({ expenses, onDeleteExpense }) => {
           {expenses.map((expense) => (
             <tr
               key={expense.id}
-              className="border-b-2 border-slate-600 bg-slate-700 hover:bg-slate-600"
+              className={`border-b-2 border-l-2 ${expense.category=="Salary"?'border-l-green-500':'border-l-red-500'}  border-b-zinc-700 bg-zinc-800 hover:bg-neutral-900`}
             >
               <td className="py-4 px-6">{expense.amount}</td>
               <td className="py-4 px-6">{expense.description}</td>
