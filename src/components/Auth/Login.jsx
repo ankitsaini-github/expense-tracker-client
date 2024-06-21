@@ -106,6 +106,8 @@ const Login = () => {
                 </button>
               </div>
             </div>
+
+            <Link to='/forgot-password' className="text-zinc-400 hover:text-zinc-100 text-md">Forgot password?</Link>
             
             <Link to='/signup' className="text-zinc-400 hover:text-zinc-100 text-md">Don't have an account? Signup now</Link>
             

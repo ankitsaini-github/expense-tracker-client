@@ -10,6 +10,7 @@ import {
 
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer";
+import ForgotPassword from "./components/Auth/ForgotPassowrd";
 import Leaderboard from "./components/Leaderboard/Leaderboard";
 import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar";
@@ -27,6 +28,7 @@ function App() {
         </Route>
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
+        <Route path="/forgot-password" component={ForgotPassword} />
         {isLogin && (<>
           <Route path="/dashboard">
             <Dashboard />
