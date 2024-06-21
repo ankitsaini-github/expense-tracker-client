@@ -5,3 +5,8 @@
 body {
   @apply bg-zinc-900;
 }
+
+.toastBody {
+  font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+  font-size: 1.5rem !important;
+}

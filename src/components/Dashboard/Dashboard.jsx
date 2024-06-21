@@ -1,7 +1,4 @@
-import "react-toastify/dist/ReactToastify.css";
-
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
 import ExpenseDonutChart from "./ExpenseDonutChart";
@@ -10,6 +7,7 @@ import ExpenseTable from "./ExpenseTable";
 import Navbar from "../Navbar";
 import axios from "axios";
 import { expenseActions } from "../../store/expenseReducer";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   
@@ -46,22 +44,9 @@ const Dashboard = () => {
 
   return (
     <>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-
       <Navbar />
 
-      {isPro && <div className="container mx-auto mt-6 p-4 bg-zinc-800 text-white rounded-md">
+      {isPro && <div className="container mx-auto mt-6 p-4 bg-zinc-800 text-white rounded-md" onClick={()=>toast.error('hello')}>
       <h1 className="text-xl text-lime-400 font-semibold mb-2 border-b border-lime-800 pb-2">Expense Chart</h1>
         <ExpenseDonutChart />
       </div>}

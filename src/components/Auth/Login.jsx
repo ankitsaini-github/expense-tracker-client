@@ -1,3 +1,4 @@
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom';
 import React, { useRef, useState } from 'react';
 
@@ -5,6 +6,7 @@ import Footer from '../Footer';
 import Navbar from '../Navbar';
 import { authActions } from "../../store/authReducer";
 import axios from 'axios';
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
@@ -46,7 +48,7 @@ const Login = () => {
       window.localStorage.setItem('useremail',res.data.useremail);
       window.localStorage.setItem('isPro',res.data.isPro)
       
-      window.alert(res.data.message);
+      toast.success(res.data.message);
       dispatch(authActions.login(res.data.isPro))
 
       history.push('/dashboard');
@@ -98,9 +100,9 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 top-2 text-zinc-500"
+                  className="absolute right-3 top-3 text-zinc-500 text-xl"
                 >
-                  {passwordVisible ? "Hide" : "Show"}
+                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
             </div>

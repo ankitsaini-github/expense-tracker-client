@@ -1,9 +1,11 @@
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom";
 import React, { useRef, useState } from "react";
 
 import Footer from "../Footer";
 import Navbar from "../Navbar";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const history = useHistory();
@@ -42,6 +44,7 @@ const Signup = () => {
       }
 
       console.log("Server response:", res.data);
+      toast.success('Account created successfully.')
       history.push("/login");
 
       userName.current.value = "";
@@ -121,9 +124,9 @@ const Signup = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute right-2 top-2 text-zinc-500"
+                  className="absolute right-3 top-3 text-zinc-500 text-xl"
                 >
-                  {passwordVisible ? "Hide" : "Show"}
+                  {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                 </button>
               </div>
             </div>
