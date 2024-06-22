@@ -15,6 +15,7 @@ import Leaderboard from "./components/Leaderboard/Leaderboard";
 import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar";
 import PageNotFound from "./components/PageNotFound";
+import Reports from "./components/Reports/Reports";
 import Signup from "./components/Auth/Signup";
 import { useSelector } from "react-redux";
 
@@ -29,14 +30,18 @@ function App() {
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/forgot-password" component={ForgotPassword} />
-        {isLogin && (<>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/leaderboard">
-          <Leaderboard />
-        </Route>
-        </>
+        {isLogin && (
+          <>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route path="/leaderboard">
+              <Leaderboard />
+            </Route>
+            <Route path="/reports">
+              <Reports />
+            </Route>
+          </>
         )}
         <Route path="*">
           <PageNotFound />
