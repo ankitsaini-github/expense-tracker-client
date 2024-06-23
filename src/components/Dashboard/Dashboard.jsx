@@ -68,13 +68,15 @@ const Dashboard = () => {
 
       <div className="container mx-auto mt-6 p-4 bg-zinc-800 text-white rounded-md">
         <h1 className="text-xl text-lime-400 font-semibold mb-2 border-b border-lime-800 pb-2">My Expenses</h1>
-        {isPro && <div className='my-3 p-3 bg-zinc-900 flex justify-end rounded'>
+        <div className='my-3 p-3 bg-zinc-900 flex justify-end rounded'>
+          {/* {isPro?
           <CSVLink data={expenses} headers={csvheaders} filename="expense_report.csv" className="bg-zinc-400 hover:bg-lime-500 text-black px-3 py-2 rounded font-bold flex items-center gap-2">
             <p>Export</p><FaFileCsv className="text-2xl"/>
           </CSVLink>
-        </div>}
+          :<p className="text-zinc-400 text-md">Get <span className="text-lime-500 font-semibold">Pro Membership</span> to export expenses</p>
+          } */}
+        </div>
         <ExpenseTable
-          expenses={expenses}
           onDeleteExpense={handleDeleteExpense}
         />
       </div>

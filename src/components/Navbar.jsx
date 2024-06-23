@@ -197,13 +197,22 @@ const Navbar = () => {
               </Link>
 
               {isPro && (
-                <Link
-                  to="/leaderboard"
-                  className="text-zinc-400 hover:text-lime-400 text-center"
-                  onClick={toggleSidebar}
-                >
-                  Leaderboard
-                </Link>
+                <>
+                  <Link
+                    to="/reports"
+                    className="text-zinc-400 hover:text-lime-400 text-center"
+                    onClick={toggleSidebar}
+                  >
+                    Reports
+                  </Link>
+                  <Link
+                    to="/leaderboard"
+                    className="text-zinc-400 hover:text-lime-400 text-center"
+                    onClick={toggleSidebar}
+                  >
+                    Leaderboard
+                  </Link>
+                </>
               )}
 
               {!isPro && (

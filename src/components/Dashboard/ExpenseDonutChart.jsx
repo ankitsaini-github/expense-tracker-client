@@ -1,15 +1,37 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import React, { useEffect, useState } from 'react';
 
 import { Doughnut } from 'react-chartjs-2';
-import React from 'react';
-import { useSelector } from "react-redux";
+import axios from 'axios';
+
+// import { useSelector } from "react-redux";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 ChartJS.defaults.font.size = 18;
 
 const ExpenseDonutChart = () => {
-  const expenses = useSelector((state) => state.expenses.expenses);
+  // const expenses = useSelector((state) => state.expenses.expenses);
+
+  const [expenses, setExpenses] = useState([]);
+  const token = window.localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/expenses/fetch-all', {
+          headers: { 'Authorization': token }
+        });
+        console.log('chart data = ',res.data);
+        setExpenses(res.data);
+      } catch (error) {
+        console.error('Error fetching expenses:', error);
+      }
+    };
+
+    fetchExpenses();
+  }, []);
+
   const categories = expenses.map(expense => expense.category);
   const uniqueCategories = [...new Set(categories)];
   const categorySums = uniqueCategories.map(category =>
