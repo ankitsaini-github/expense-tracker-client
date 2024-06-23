@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const ExpenseTable = ({ onDeleteExpense }) => {
   const [expenses, setExpenses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [expensesPerPage,setexpensesPerPage] = useState(localStorage.getItem('rowsperpage')?parseInt(localStorage.getItem('rowsperpage'),10):10)
+  const totalValue = useSelector((state) => state.expenses.totalValue);
   const token = window.localStorage.getItem("token");
 
   const fetchExpenses = async (page,limit) => {
@@ -22,7 +24,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
       if (res.status != 200) {
         throw new Error("res status not 200");
       }
-      console.log("got expenses ", res.data.expenses);
+      console.log("got expenses in table component ", res.data.expenses);
       setExpenses(res.data.expenses);
       setTotalPages(res.data.totalPages);
     } catch (error) {
@@ -33,7 +35,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
 
   useEffect(() => {
     fetchExpenses(currentPage,expensesPerPage);
-  }, [currentPage,expensesPerPage]);
+  }, [currentPage,expensesPerPage,totalValue]);
 
   const handleDelete = async (id) => {
     if (confirm("Do you want to delete this expense?")) {
@@ -45,7 +47,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
           }
         );
         onDeleteExpense(id);
-        fetchExpenses(currentPage); // Refresh the expenses after deletion
+        // fetchExpenses(currentPage);
         toast.success(res.data.message);
       } catch (error) {
         console.error("Error deleting expense:", error);
@@ -66,8 +68,9 @@ const ExpenseTable = ({ onDeleteExpense }) => {
 
   return (
     <div className="overflow-x-auto p-3">
+      <div>Total : Rs. {totalValue}</div>
       <div className="my-3 py-3 text-zinc-400 flex items-center">
-        <label for="rowsperpage">Rows per page : </label>
+        <label htmlFor="rowsperpage">Rows per page : </label>
 
         <select
           name="rowsperpage"

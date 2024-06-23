@@ -4,7 +4,7 @@ const authSlice=createSlice({
     name:'authentication',
     initialState:{
         isloggedin: window.localStorage.getItem('token')?true:false,
-        isPro: window.localStorage.getItem('isPro')?true:false,
+        isPro: window.localStorage.getItem('isPro')=='true'?true:false,
     },
     reducers:{
         login(state,action){
