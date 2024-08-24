@@ -23,7 +23,7 @@ const Dashboard = () => {
     const fetchExpenses = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/expenses/fetch-all`,
+          `${import.meta.env.VITE_SERVER_IP}/expenses/fetch-all`,
           { headers: { Authorization: token } }
         );
         // console.log(response.data);

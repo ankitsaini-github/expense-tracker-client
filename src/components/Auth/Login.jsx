@@ -35,7 +35,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/user/login',loginPayload)
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_IP}/user/login`,loginPayload)
 
       if (res.status !== 200) {
         console.log('Error============:', res);
@@ -43,7 +43,7 @@ const Login = () => {
         return;
       }
 
-      console.log('Server response:', res.data);
+      // console.log('Server response:', res.data);
       window.localStorage.setItem('token',res.data.token)
       window.localStorage.setItem('useremail',res.data.useremail);
       window.localStorage.setItem('isPro',res.data.isPro)

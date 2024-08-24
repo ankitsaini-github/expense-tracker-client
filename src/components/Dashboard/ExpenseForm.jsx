@@ -15,7 +15,7 @@ const ExpenseForm = ({ onAddExpense }) => {
     const newExpense = { amount: expenseAmount, description, category };
     
     try {
-    const response = await axios.post('http://localhost:3000/expenses/add-expense', newExpense, {headers:{'Authorization' : token}});
+    const response = await axios.post(`${import.meta.env.VITE_SERVER_IP}/expenses/add-expense`, newExpense, {headers:{'Authorization' : token}});
       onAddExpense(response.data);
       toast.success('Expense Added.')
       setExpenseAmount('');

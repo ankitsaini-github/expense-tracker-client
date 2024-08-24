@@ -16,7 +16,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
   const fetchExpenses = async (page,limit) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/expenses/fetch-all?page=${page}&limit=${limit}`,
+        `${import.meta.env.VITE_SERVER_IP}/expenses/fetch-all?page=${page}&limit=${limit}`,
         {
           headers: { Authorization: token },
         }
@@ -24,7 +24,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
       if (res.status != 200) {
         throw new Error("res status not 200");
       }
-      console.log("got expenses in table component ", res.data.expenses);
+      // console.log("got expenses in table component ", res.data.expenses);
       setExpenses(res.data.expenses);
       setTotalPages(res.data.totalPages);
     } catch (error) {
@@ -41,7 +41,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
     if (confirm("Do you want to delete this expense?")) {
       try {
         const res = await axios.delete(
-          `http://localhost:3000/expenses/delete-expense/${id}`,
+          `${import.meta.env.VITE_SERVER_IP}/expenses/delete-expense/${id}`,
           {
             headers: { Authorization: token },
           }

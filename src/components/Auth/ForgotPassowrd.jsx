@@ -25,7 +25,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/user/forgot-password',resetPayload)
+      const res = await axios.post(`${import.meta.env.VITE_SERVER_IP}/user/forgot-password`,resetPayload)
 
       if (res.status !== 200) {
         console.log('Error============:', res);
@@ -33,7 +33,7 @@ const ForgotPassword = () => {
         return;
       }
 
-      console.log('Server response:', res.data);
+      // console.log('Server response:', res.data);
 
       toast.success(res.data.message);
 

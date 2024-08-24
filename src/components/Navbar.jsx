@@ -34,13 +34,13 @@ const Navbar = () => {
 
     const token = window.localStorage.getItem("token");
 
-    console.log("sending req to buypro"); // test
-    const response = await axios.get("http://localhost:3000/checkout/buy-pro", {
+    // console.log("sending req to buypro"); // test
+    const response = await axios.get(`${import.meta.env.VITE_SERVER_IP}/checkout/buy-pro`, {
       headers: { Authorization: token },
     });
-    console.log("buy pro res ====== ", response); // test
+    // console.log("buy pro res ====== ", response); // test
     const data = response.data;
-    console.log("buy pro data === ", data); // test
+    // console.log("buy pro data === ", data); // test
 
     const options = {
       key: data.key_id,
@@ -50,7 +50,7 @@ const Navbar = () => {
       order_id: data.order.id,
       handler: async function (response) {
         await axios.post(
-          "http://localhost:3000/checkout/update-status",
+          `${import.meta.env.VITE_SERVER_IP}/checkout/update-status`,
           {
             order_id: options.order_id,
             payment_id: response.razorpay_payment_id,
@@ -73,7 +73,7 @@ const Navbar = () => {
     paymentObject.open();
 
     paymentObject.on("payment.failed", function (response) {
-      console.log(response);
+      // console.log(response);
       toast.error("Payment Failed.");
     });
   };

@@ -20,7 +20,7 @@ const Reports = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get("http://localhost:3000/premium/all-files", {
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_IP}/premium/all-files`, {
           headers: { Authorization: token },
         });
         console.log("files ", res.data);
@@ -60,16 +60,16 @@ const Reports = () => {
   };
 
   const handleDateChange = (date) => {
-    fetchExpenses(`http://localhost:3000/premium/reports?date=${date}`);
+    fetchExpenses(`${import.meta.env.VITE_SERVER_IP}/premium/reports?date=${date}`);
   };
 
   const handleMonthChange = (month) => {
-    fetchExpenses(`http://localhost:3000/premium/reports?month=${month}`);
+    fetchExpenses(`${import.meta.env.VITE_SERVER_IP}/premium/reports?month=${month}`);
   };
 
   const downloadHandler = async () => {
     try {
-      const res = await axios("http://localhost:3000/premium/download", {
+      const res = await axios(`${import.meta.env.VITE_SERVER_IP}/premium/download`, {
         headers: { Authorization: token },
       });
       if (res.data.fileURL) {

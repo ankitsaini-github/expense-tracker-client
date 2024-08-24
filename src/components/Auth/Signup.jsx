@@ -33,7 +33,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/user/signup",
+        `${import.meta.env.VITE_SERVER_IP}/user/signup`,
         signupPayload
       );
 
@@ -43,7 +43,7 @@ const Signup = () => {
         return;
       }
 
-      console.log("Server response:", res.data);
+      // console.log("Server response:", res.data);
       toast.success('Account created successfully.')
       history.push("/login");
 
