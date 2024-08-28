@@ -37,7 +37,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
     fetchExpenses(currentPage,expensesPerPage);
   }, [currentPage,expensesPerPage,totalValue]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id,amount) => {
     if (confirm("Do you want to delete this expense?")) {
       try {
         const res = await axios.delete(
@@ -46,8 +46,8 @@ const ExpenseTable = ({ onDeleteExpense }) => {
             headers: { Authorization: token },
           }
         );
-        onDeleteExpense(id);
-        // fetchExpenses(currentPage);
+        onDeleteExpense(id,amount);
+        fetchExpenses(currentPage, expensesPerPage); //refetch
         toast.success(res.data.message);
       } catch (error) {
         console.error("Error deleting expense:", error);
@@ -64,6 +64,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
     console.log('rows : ',e.target.value)
     localStorage.setItem('rowsperpage',e.target.value);
     setexpensesPerPage(parseInt(e.target.value,10))
+    setCurrentPage(1);
   }
 
   return (
@@ -106,7 +107,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
           {expenses.length > 0 &&
             expenses.map((expense) => (
               <tr
-                key={expense.id}
+                key={expense._id}
                 className={`border-b-2 border-l-2 ${
                   expense.category === "Salary"
                     ? "border-l-green-500"
@@ -118,7 +119,7 @@ const ExpenseTable = ({ onDeleteExpense }) => {
                 <td className="py-4 px-6">{expense.category}</td>
                 <td className="py-4 px-6">
                   <button
-                    onClick={() => handleDelete(expense.id)}
+                    onClick={() => handleDelete(expense._id,expense.amount)}
                     className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
                   >
                     <FaTrashAlt />

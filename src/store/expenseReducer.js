@@ -19,8 +19,8 @@ const expenseSlice=createSlice({
 
         },
         deleteExpense(state,action){
-            state.expenses = state.expenses.filter((expense) => expense.id !== action.payload);
-            state.totalValue= state.expenses.reduce((acc, cur) => acc + parseInt(cur.amount), 0);
+            state.expenses = state.expenses.filter((expense) => expense._id !== action.payload.id);
+            state.totalValue-=parseInt(action.payload.amount)
         },
     }
 })
